@@ -3,7 +3,6 @@
 
 #define BUFSIZE 256
 
-
 void encodeShellString(char *dest, size_t size, char *src){
    size_t j = 0;
    dest[j] = '"';
@@ -31,8 +30,9 @@ int main(int argc, char** argv) {
         fprintf(stderr, "Please provide the address of a file as an input.\n");
         return -1;
     }
+    char EncodedArg[BUFSIZE] = {0};
     char cmd[BUFSIZE] = {0};
-    encodeShellString(cmd, BUFSIZE, argv[1]);
-    strcat(cmd, argv[1]);
+    encodeShellString(EncodedArg, BUFSIZE, argv[1]);
+    sprintf(cmd, "wc -c < %s", EncodedArg);
     system(cmd);
 }
