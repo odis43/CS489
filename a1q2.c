@@ -1,8 +1,21 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 
 #define BUFSIZE 256
+
+void encodeShellString(char *dest, size_t size, char *src){
+   size_t j = 0;
+   //wrap the dest in quotations to encode as string
+   dest[j] = '"';
+   j++;
+   for (size_t i = 0; src[i] != '\0' && j < size - 2; i++) {
+       dest[j] = src[i];
+       j++;
+   }
+   dest[j] = '"';
+   j++;
+   dest[j] = '\0';
+}
 
 // This program prints the size of a specified file in bytes
 int main(int argc, char** argv) {
@@ -12,13 +25,9 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    if(strpbrk(argv[1], "!@#$%^&*(){}[]()\\|;`") != NULL){
-        fprintf(stderr, "Please provide input without invalid characters");
-        return -1;
-    }
-
+    char encodedArg[BUFSIZE] = {0};
+    encodeShellString(encodedArg, BUFSIZE, argv[1]);
     char cmd[BUFSIZE] = {0};
-    //quote the argument to be treated as a string
-    snprintf(cmd, BUFSIZE, "wc -c < \"%s\"", argv[1]);
+    snprintf(cmd, BUFSIZE, "wc -c < %s", encodedArg);
     system(cmd);
 }
