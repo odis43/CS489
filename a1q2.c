@@ -24,9 +24,8 @@ int main(int argc, char** argv) {
         fprintf(stderr, "Please provide the address of a file as an input.\n");
         return -1;
     }
-    char EncodedArg[BUFSIZE] = {0};
     char cmd[BUFSIZE] = {0};
-    encodeShellString(EncodedArg, BUFSIZE, argv[1]);
-    sprintf(cmd, "wc -c < %s", EncodedArg);
+    encodeShellString(cmd, BUFSIZE, argv[1]);
+    strcat(cmd, "wc -c < ");
     system(cmd);
 }
