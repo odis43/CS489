@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #define BUFSIZE 256
 
@@ -8,6 +9,11 @@ int main(int argc, char** argv) {
     // Ensure that the user supplied exactly one command line argument
     if (argc != 2) {
         fprintf(stderr, "Please provide the address of a file as an input.\n");
+        return -1;
+    }
+
+    if(strpbrk(argv[1], "!@#$%^&*(){}[]()\\|;`") != NULL){
+        fprintf(stderr, "Please provide input without invalid characters");
         return -1;
     }
 
