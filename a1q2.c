@@ -5,16 +5,10 @@
 
 void encodeShellString(char *dest, size_t size, char *src){
    size_t j = 0;
+   //wrap the dest in quotations to encode as string
    dest[j] = '"';
    j++;
    for (size_t i = 0; src[i] != '\0' && j < size - 2; i++) {
-       if(src[i] == '"'){
-          if(dest[j] < size - 3){
-             dest[j] = '\\';
-          } else {
-              break;
-          }
-       }
        dest[j] = src[i];
        j++;
    }
