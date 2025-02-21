@@ -25,8 +25,8 @@ int main(int argc, char** argv) {
         return -1;
     }
     char encodedArg[BUFSIZE] = {0};
-    char cmd[BUFSIZE] = "wc -c < ";
+    char cmd[BUFSIZE] = {0}
     encodeShellString(encodedArg, BUFSIZE, argv[1]);
-    strcat(cmd, encodedArg);
+    snprintf(cmd, BUFSIZE, "wc -c < %s", encodedArg);
     system(cmd);
 }
